@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
     	let gameOver = false;
     	let cont = 0; 
     	let enemyTimer;
-
+        let points = 0;
         enemyTimer = setInterval(createEnemy, 2000); 
 
         function updateMovement() {
@@ -118,8 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
-
-        let points = 0;
 
         function checkCollisionWithEnemy(bullet) {
             enemies.forEach(enemy => {
