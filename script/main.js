@@ -1,3 +1,4 @@
+hola
 document.addEventListener('DOMContentLoaded', () => {
     const interfaz = document.querySelector('.Interfaz');
     const gameArea = document.getElementById('gameArea');
