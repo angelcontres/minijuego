@@ -119,6 +119,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
+        let points = 0;
+
         function checkCollisionWithEnemy(bullet) {
             enemies.forEach(enemy => {
                 let eRect = enemy.getBoundingClientRect();
@@ -133,6 +135,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     bullets = bullets.filter(b => b !== bullet); 
                     enemies = enemies.filter(e => e !== enemy); 
                     bullet.remove();
+                    points += 100;
+                    document.getElementById("points").innerHTML = "Puntos: " + points;
                     escribir();
                 }
             });
