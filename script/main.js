@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let bulletTop = bullet.offsetTop;
                 if (bulletTop < 0) {
                     bullet.remove();
-                    bullets = bullets.filter(b => b !== bullet); // Elimina la bala del array
+                    bullets = bullets.filter(b => b !== bullet); 
                     return;
                 }
                 bullet.style.top = bulletTop - 35 + 'px'; 
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function createEnemy() {
-            let randomX = Math.floor(Math.random() * (gameArea.offsetWidth - 50)); // Ajusta el tamaño del enemigo
+            let randomX = Math.floor(Math.random() * (gameArea.offsetWidth - 50)); 
             const enemy = document.createElement('div');
             enemy.className = 'enemy';
             enemy.style.left = `${randomX}px`;
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 top += 2; // Ajusta la velocidad de movimiento vertical del enemigo
                 if (top > gameArea.offsetHeight) {
                     enemy.remove();
-                    enemies = enemies.filter(e => e !== enemy); // Elimina el enemigo del array
+                    enemies = enemies.filter(e => e !== enemy);
                 } else {
                     enemy.style.top = `${top}px`;
                 }
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 let bulletTop = bullet.offsetTop;
                 if (bulletTop < 0) {
                     bullet.remove();
-                    bullets = bullets.filter(b => b !== bullet); // Elimina la bala del array
+                    bullets = bullets.filter(b => b !== bullet);
                 } else {
                     bullet.style.top = bulletTop - 35 + 'px'; 
                     checkCollisionWithEnemy(bullet);
@@ -130,8 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     eRect.bottom > bRect.top) {
                     
                     enemy.remove();
-                    bullets = bullets.filter(b => b !== bullet); // Elimina la bala del array
-                    enemies = enemies.filter(e => e !== enemy); // Elimina el enemigo del array
+                    bullets = bullets.filter(b => b !== bullet); 
+                    enemies = enemies.filter(e => e !== enemy); 
                     bullet.remove();
                     escribir();
                 }
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             gameOver = true;
             clearInterval(enemyTimer);
             alert('Game Over! Reloading the page...');
-            window.location.reload(); // Recarga la página para reiniciar el juego
+            window.location.reload();
         }
     }
 });
