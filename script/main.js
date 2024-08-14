@@ -14,14 +14,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function startGame() {
         console.log('Juego iniciado!');
-            let movX = sujeto.offsetLeft;
-    let movY = sujeto.offsetTop;
-    let keysPressed = {};
-    let enemies = []; // Arreglo para almacenar enemigos
-    let bullets = []; // Arreglo para almacenar balas
-    let gameOver = false;
-    let cont = 0; // Inicializamos el contador fuera de la función escribir
-    let enemyTimer;
+        let movX = sujeto.offsetLeft;
+    	let movY = sujeto.offsetTop;
+    	let keysPressed = {};
+    	let enemies = []; 
+    	let bullets = []; 
+    	let gameOver = false;
+    	let cont = 0; 
+    	let enemyTimer;
 
         enemyTimer = setInterval(createEnemy, 2000); 
 
