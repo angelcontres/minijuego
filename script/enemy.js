@@ -8,6 +8,7 @@ export class Enemy {
         this.element.style.left = `${this.x}px`;
         this.element.style.top = `${this.y}px`;
         this.board.appendChild(this.element);
+        wow carita cansada
     }
 
     move() {
