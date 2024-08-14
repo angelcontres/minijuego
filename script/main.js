@@ -1,3 +1,5 @@
+Pongan contenido H está muy aburrido el juego 0/10 y zzzzz
+
 document.addEventListener('DOMContentLoaded', () => {
     const interfaz = document.querySelector('.Interfaz');
     const gameArea = document.getElementById('gameArea');
