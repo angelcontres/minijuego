@@ -50,10 +50,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         gameLoop();
 
+        let canShoot = true;
+        let shootInterval = 200;
+
         document.addEventListener('keydown', function(event) {
             keysPressed[event.key] = true;
-            if (event.key === 'x') {
+            if (event.key === 'x' && canShoot) {
                 shootBullet();
+                canShoot = false;
+                setTimeout(() => {
+                    canShoot = true;
+                }, shootInterval);
             }
         });
 
