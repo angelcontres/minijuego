@@ -94,5 +94,46 @@ h1 {
     z-index: 1000; 
     width: 300px;
 }
+.instructions-overlay {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    width: 440px;
+}
 
+#showInstructions {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
+#closeInstructions {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.enemyBullet {
+    width: 5px;
+    height: 15px;
+    background: red;
+    position: absolute;
+}
