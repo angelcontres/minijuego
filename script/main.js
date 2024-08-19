@@ -2,6 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const interfaz = document.querySelector('.Interfaz');
     const gameArea = document.getElementById('gameArea');
     const sujeto = document.getElementById('sujeto');
+    const pauseOverlay = document.getElementById('pauseOverlay'); // Interfaz de pausa
 
     interfaz.style.display = 'block';
     gameArea.style.display = 'none';
@@ -10,20 +11,34 @@ document.addEventListener('DOMContentLoaded', () => {
         interfaz.style.display = 'none';
         gameArea.style.display = 'block';
         startGame(); 
-    }, { once: true }); 
+    }, { once: true });
 
     function startGame() {
         console.log('Juego iniciado!');
         let movX = sujeto.offsetLeft;
-    	let movY = sujeto.offsetTop;
-    	let keysPressed = {};
-    	let enemies = []; 
-    	let bullets = []; 
-    	let gameOver = false;
-    	let cont = 0; 
-    	let enemyTimer;
+        let movY = sujeto.offsetTop;
+        let keysPressed = {};
+        let enemies = [];
+        let bullets = [];
+        let gameOver = false;
+        let gamePaused = false; // Estado de pausa
+        let enemyTimer;
         let points = 0;
-        enemyTimer = setInterval(createEnemy, 2000); 
+	let cont = 0;
+        let canShoot = true;
+        let shootInterval = 200;
+        let canShootBurst = true;
+        let burstCooldown = 1000; // Cooldown de 1 segundo para la ráfaga
+
+        function startEnemyGeneration() {
+            enemyTimer = setInterval(createEnemy, 2000); // Genera enemigos cada 2 segundos
+        }
+
+        function stopEnemyGeneration() {
+            clearInterval(enemyTimer);
+        }
+
+        startEnemyGeneration();
 
         function updateMovement() {
             if (keysPressed['w']) movY -= 5;
@@ -41,17 +56,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function gameLoop() {
-            if (!gameOver) {
+            if (!gameOver && !gamePaused) { // Verifica si el juego no está en pausa
                 updateMovement();
                 updateEnemies();
                 updateBullets();
-                requestAnimationFrame(gameLoop);
             }
+            requestAnimationFrame(gameLoop); // Sigue ejecutando el loop, pero no actualiza si está en pausa
         }
         gameLoop();
-
-        let canShoot = true;
-        let shootInterval = 200;
 
         document.addEventListener('keydown', function(event) {
             keysPressed[event.key] = true;
@@ -62,11 +74,39 @@ document.addEventListener('DOMContentLoaded', () => {
                     canShoot = true;
                 }, shootInterval);
             }
+            if (event.key === 'z' && canShootBurst) {
+                shootBurst();
+                canShootBurst = false;
+                setTimeout(() => {
+                    canShootBurst = true;
+                }, burstCooldown);
+            }
+            if (event.key === 'Escape') {
+                gamePaused = !gamePaused;
+                if (gamePaused) {
+                    stopEnemyGeneration(); 
+                    pauseOverlay.style.display = 'block'; 
+                    console.log("Juego en pausa");
+                } else {
+                    startEnemyGeneration(); 
+                    pauseOverlay.style.display = 'none'; 
+                    console.log("Juego reanudado");
+                }
+            }
         });
 
         document.addEventListener('keyup', function(event) {
             delete keysPressed[event.key];
         });
+
+        function shootBurst() {
+            let burstCount = 5; 
+            let burstInterval = 100; 
+
+            for (let i = 0; i < burstCount; i++) {
+                setTimeout(shootBullet, i * burstInterval);
+            }
+        }
 
         function shootBullet() {
             let bullet = document.createElement('div');
@@ -148,16 +188,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         function checkCollisionWithPlayer(enemy) {
-            let eRect = enemy.getBoundingClientRect();
-            let pRect = sujeto.getBoundingClientRect();
-            
-            if (eRect.left < pRect.right &&
-                eRect.right > pRect.left &&
-                eRect.top < pRect.bottom &&
-                eRect.bottom > pRect.top) {
-                endGame();
-            }
-        }
+    let eRect = enemy.getBoundingClientRect();
+    let pRect = sujeto.getBoundingClientRect();
+    
+    let margin = 9;
+    let adjustedERect = {
+        left: eRect.left + margin,
+        right: eRect.right - margin,
+        top: eRect.top + margin,
+        bottom: eRect.bottom - margin
+    };
+    let adjustedPRect = {
+        left: pRect.left + margin,
+        right: pRect.right - margin,
+        top: pRect.top + margin,
+        bottom: pRect.bottom - margin
+    };
+
+    if (adjustedERect.left < adjustedPRect.right &&
+        adjustedERect.right > adjustedPRect.left &&
+        adjustedERect.top < adjustedPRect.bottom &&
+        adjustedERect.bottom > adjustedPRect.top) {
+        endGame();
+    }
+}
+
 
         function escribir() {
             cont++;
@@ -166,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         function endGame() {
             gameOver = true;
-            clearInterval(enemyTimer);
+            stopEnemyGeneration(); 
             alert('Game Over! Reloading the page...');
             window.location.reload();
         }
