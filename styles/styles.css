@@ -45,7 +45,7 @@ h1 {
 }
 
 .creditos {
-    padding: 10px;
+    padding: 20px;
     color: white; 
 }
 .gameArea {
@@ -61,8 +61,8 @@ h1 {
     position: absolute;
     top: 250px;
     left: 300px;
-    width: 50px;  
-    height: 50px; 
+    width: 45px;  
+    height: 42px; 
     background: url("../images/sujeto.png") no-repeat center center;
     background-size: cover;
     transition: top 0.1s linear, left 0.1s linear;
@@ -75,9 +75,24 @@ h1 {
     transition: top 0.1s linear;
 }
 .enemy {
-    width: 50px;
-    height: 48px;
+    width: 49px;
+    height: 49px;
     background: url("../images/enemies.png");
     position: absolute;
 }
+.pause-overlay {
+    display: none; /* Inicialmente oculto */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 1000; 
+    width: 300px;
+}
+
 
